@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: dailyhabittracker-api
+    env: node
+    rootDir: server
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      # Set these in Render dashboard (do not commit real values)
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      # Set this to your Netlify site URL, e.g. https://dailyhabittracker.netlify.app
+      - key: CLIENT_ORIGINS
+        sync: false
+

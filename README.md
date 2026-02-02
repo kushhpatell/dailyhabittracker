@@ -38,3 +38,24 @@ Client defaults to `http://localhost:5173` and server to `http://localhost:4000`
 
 - The server expects MongoDB via `MONGO_URI`.
 - Never commit `server/.env` (this repo ignores it). Use your host’s environment variables instead.
+
+## Deploy (recommended: Netlify + Render)
+
+### Backend (Render)
+
+- Create a new **Web Service** from this repo
+- **Root directory**: `server`
+- **Build**: `npm install`
+- **Start**: `npm start`
+- Set env vars:
+  - `MONGO_URI` = your MongoDB connection string (MongoDB Atlas recommended)
+  - `JWT_SECRET` = a long random string
+  - `CLIENT_ORIGINS` = your Netlify URL (and any custom domains), comma-separated  
+    Example: `https://dailyhabittracker.netlify.app`
+
+### Frontend (Netlify)
+
+- Create a new site from this repo (Netlify will use `netlify.toml`)
+- Set env var:
+  - `VITE_API_URL` = your Render backend URL (example: `https://dailyhabittracker-api.onrender.com`)
+

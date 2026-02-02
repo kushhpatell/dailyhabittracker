@@ -10,21 +10,30 @@ const { analyticsRouter } = require("./routes/analytics");
 
 const app = express();
 
+function parseOrigins() {
+  // Accept comma-separated list in production (Netlify preview + prod, custom domains, etc.)
+  const raw = (process.env.CLIENT_ORIGINS || process.env.CLIENT_ORIGIN || "").trim();
+  const parts = raw
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  // Always allow local dev
+  parts.push("http://localhost:5173", "http://localhost:5174");
+  return Array.from(new Set(parts));
+}
+
+const allowedOrigins = parseOrigins();
+
 app.use(
   cors({
     origin: (origin, cb) => {
       // Allow same-origin / tools without Origin header
       if (!origin) return cb(null, true);
 
-      const allowed = new Set([
-        process.env.CLIENT_ORIGIN || "http://localhost:5173",
-        "http://localhost:5173",
-        "http://localhost:5174",
-      ]);
-
       // Allow any localhost port in dev
       if (origin.startsWith("http://localhost:")) return cb(null, true);
-      if (allowed.has(origin)) return cb(null, true);
+      if (allowedOrigins.includes(origin)) return cb(null, true);
       return cb(new Error("Not allowed by CORS"));
     },
     credentials: true,
