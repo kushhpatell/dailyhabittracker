@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Favicon: provide PNGs for multiple sizes and a fallback ICO -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <meta name="theme-color" content="#ffffff">
+  <title>Daily Habit Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Daily Habit Tracker</p>
+        <h1>Build habits one day at a time</h1>
+        <p class="subhead">Log in, add habits, customize colors, and track streaks.</p>
+      </div>
+      <button id="logoutBtn" class="ghost" type="button" hidden>Log out</button>
+    </header>
+
+    <main>
+      <section id="authSection" class="card-grid">
+        <div class="card">
+          <h2>Create account</h2>
+          <form id="registerForm" class="stack">
+            <label>
+              Username
+              <input name="username" type="text" required minlength="3" autocomplete="username">
+            </label>
+            <label>
+              Password
+              <input name="password" type="password" required minlength="4" autocomplete="new-password">
+            </label>
+            <button type="submit">Register</button>
+          </form>
+        </div>
+        <div class="card">
+          <h2>Log in</h2>
+          <form id="loginForm" class="stack">
+            <label>
+              Username
+              <input name="username" type="text" required autocomplete="username">
+            </label>
+            <label>
+              Password
+              <input name="password" type="password" required autocomplete="current-password">
+            </label>
+            <button type="submit">Log in</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="appSection" hidden>
+        <div class="card">
+          <h2>Add a habit</h2>
+          <form id="habitForm" class="stack inline-grid">
+            <label>
+              Habit name
+              <input name="name" type="text" required maxlength="60" placeholder="e.g. Morning walk">
+            </label>
+            <label>
+              Tag / emoji
+              <input name="tag" type="text" maxlength="12" placeholder="💧 Health">
+            </label>
+            <label>
+              Color
+              <input name="color" type="color" value="#7c3aed">
+            </label>
+            <label>
+              Notes
+              <input name="notes" type="text" maxlength="120" placeholder="Optional reminder or target">
+            </label>
+            <button type="submit">Add habit</button>
+          </form>
+        </div>
+
+        <div class="toolbar card">
+          <div>
+            <h2>Today</h2>
+            <p id="todayText" class="muted"></p>
+          </div>
+          <div class="filters">
+            <input id="searchInput" type="search" placeholder="Search habits...">
+            <select id="filterSelect">
+              <option value="all">All</option>
+              <option value="done">Done today</option>
+              <option value="todo">Not done</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="habitList" class="card-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <template id="habitTemplate">
+    <article class="card habit-card">
+      <header class="habit-header">
+        <div class="habit-color"></div>
+        <div>
+          <div class="habit-title-row">
+            <h3 class="habit-name"></h3>
+            <span class="habit-tag"></span>
+          </div>
+          <p class="habit-notes muted"></p>
+        </div>
+      </header>
+      <div class="habit-meta">
+        <span class="pill streak-pill"></span>
+        <span class="pill created-pill"></span>
+      </div>
+      <div class="habit-actions">
+        <label class="checkbox">
+          <input type="checkbox" class="done-checkbox">
+          <span>Done today</span>
+        </label>
+        <div class="button-row">
+          <button class="ghost small edit-btn" type="button">Edit</button>
+          <button class="ghost small danger delete-btn" type="button">Delete</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
